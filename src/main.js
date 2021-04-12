@@ -7,4 +7,6 @@ import { createApp } from "vue";
 import root from "./root/root.vue";
 import router from "./root/router";
 
+import "./root/database";
+
 createApp(root).use(router).mount("#root");
