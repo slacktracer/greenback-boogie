@@ -1,0 +1,35 @@
+{
+  "name": "greenback-boogie",
+  "version": "0.0.0",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "format": "prettier . --write",
+    "format-check": "prettier . --check",
+    "lint": "eslint . --ext .js,.vue",
+    "major": "npm version major -m 'Build v%s' && git push --follow-tags",
+    "minor": "npm version minor -m 'Build v%s' && git push --follow-tags",
+    "patch": "npm version patch -m 'Build v%s' && git push --follow-tags",
+    "premajor": "npm run type-check_format-check_lint",
+    "preminor": "npm run type-check_format-check_lint",
+    "prepatch": "npm run type-check_format-check_lint",
+    "serve": "vite preview",
+    "start": "npm run dev"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.9.2",
+    "bootstrap": "^5.0.0-beta3",
+    "bootstrap-icons": "^1.4.1",
+    "papaparse": "^5.3.0",
+    "vue": "^3.0.11",
+    "vue-router": "^4.0.6"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.2.1",
+    "@vue/compiler-sfc": "^3.0.5",
+    "eslint": "^7.24.0",
+    "eslint-plugin-vue": "^7.9.0",
+    "prettier": "^2.2.1",
+    "vite": "^2.1.5"
+  }
+}
