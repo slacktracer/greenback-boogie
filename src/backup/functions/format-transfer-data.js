@@ -1,4 +1,7 @@
 import { getTime, parse } from "date-fns";
+import { v4 as uuidv4 } from 'uuid';
+
+import { parseAmount } from "./parse-amount";
 
 export const formatTransferData = ({ transferData }) => {
   const transferOperations = [];
@@ -17,19 +20,23 @@ export const formatTransferData = ({ transferData }) => {
       comments,
     ] = operation;
 
-    const timepath = datetime.split(" ")[0].split(".").reverse();
+    const [date, time] = datetime.split(" ");
+
+    const datepath = date.split(".").reverse();
+
     const timestamp = getTime(parse(datetime, "dd.MM.yy HH:mm", new Date()));
 
     transferOperations.push({
-      amount,
+      amount: parseAmount({ amount }),
       comments,
       currency: currency.replace(/^r$/, "R$"),
       fromAccount,
+      id: uuidv4(),
       rate,
       timestamp,
       toAccount,
       type,
-      __meta__: { timepath },
+      __meta__: { datepath, time },
     });
   }
 

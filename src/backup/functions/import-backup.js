@@ -1,6 +1,7 @@
 import { database } from "../../root/database";
 import { formatExpensesAndIncomeData } from "./format-expenses-and-income-data";
 import { formatTransferData } from "./format-transfer-data";
+import { getGroupsAndCategories } from "./get-groups-and categories";
 import { parseCSVFile } from "./parse-csv-file";
 
 export const importBackup = async ({ expensesAndIncomeFile, transferFile }) => {
@@ -8,6 +9,8 @@ export const importBackup = async ({ expensesAndIncomeFile, transferFile }) => {
     csvFile: expensesAndIncomeFile,
   });
   const transferData = await parseCSVFile({ csvFile: transferFile });
+
+  const groupsAndCategories = getGroupsAndCategories({ expensesAndIncomeData });
 
   const expensesAndIncomeOperations = formatExpensesAndIncomeData({
     expensesAndIncomeData,
@@ -18,12 +21,12 @@ export const importBackup = async ({ expensesAndIncomeFile, transferFile }) => {
     ...expensesAndIncomeOperations,
     ...transferOperations,
   ].sort(
-    (operationA, operationB) => operationB.timestamp - operationA.timestamp,
+    (operationA, operationB) => operationA.timestamp - operationB.timestamp,
   );
 
   const operationsAsAnYearMonthDayStructure = allOperations.reduce(
     (reduction, operation) => {
-      const [year, month, day] = operation.__meta__.timepath;
+      const [year, month] = operation.__meta__.datepath;
 
       if (reduction[year] === undefined) {
         reduction[year] = {};
@@ -33,13 +36,7 @@ export const importBackup = async ({ expensesAndIncomeFile, transferFile }) => {
         reduction[year][month] = {};
       }
 
-      if (reduction[year][month][day] === undefined) {
-        reduction[year][month][day] = [];
-      }
-
-      delete operation.__meta__;
-
-      reduction[year][month][day].push(operation);
+      reduction[year][month][operation.id] = operation;
 
       return reduction;
     },
@@ -47,9 +44,8 @@ export const importBackup = async ({ expensesAndIncomeFile, transferFile }) => {
   );
 
   try {
-    await database
-      .ref("operations")
-      .set(operationsAsAnYearMonthDayStructure);
+    await database.ref("groupsAndCategories").set(groupsAndCategories);
+    await database.ref("operations").set(operationsAsAnYearMonthDayStructure);
 
     return true;
   } catch (error) {

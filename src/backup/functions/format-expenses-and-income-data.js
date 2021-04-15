@@ -1,5 +1,7 @@
 import { getTime, parse } from "date-fns";
+import { v4 as uuidv4 } from 'uuid';
 
+import {fixName} from "../helpers/fix-names";
 import { parseAmount } from "./parse-amount";
 
 export const formatExpensesAndIncomeData = ({ expensesAndIncomeData }) => {
@@ -15,25 +17,29 @@ export const formatExpensesAndIncomeData = ({ expensesAndIncomeData }) => {
       currency,
       amountPerUnit,
       unitCount,
-      finalAmount,
+      amount,
       comments,
     ] = operation;
 
-    const timepath = datetime.split(" ")[0].split(".").reverse();
+    const [date, time] = datetime.split(" ");
+
+    const datepath = date.split(".").reverse();
+
     const timestamp = getTime(parse(datetime, "dd.MM.yy HH:mm", new Date()));
 
     expenseAndIncomeOperations.push({
       account,
+      amount: parseAmount({ amount }),
       amountPerUnit: parseAmount({ amount: amountPerUnit }),
       comments,
-      category,
+      category: fixName({ name: category, type: "category" }),
       currency: currency.replace(/^r$/, "R$"),
-      finalAmount: parseAmount({ amount: finalAmount }),
-      group,
+      group: fixName({ name: group, type: "group" }),
+      id: uuidv4(),
       timestamp,
       type,
       unitCount: Number(unitCount),
-      __meta__: { timepath },
+      __meta__: { datepath, time },
     });
   }
 
