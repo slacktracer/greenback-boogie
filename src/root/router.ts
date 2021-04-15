@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 
 import backup from "../backup/backup.vue";
 import home from "../home/home.vue";
+import operations from "../operations/operations.vue";
 
 const routes = [
   {
@@ -13,6 +14,11 @@ const routes = [
     path: "/",
     name: "home",
     component: home,
+  },
+  {
+    path: "/operations",
+    name: "operations",
+    component: operations,
   },
 ];
 
