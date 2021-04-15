@@ -21,6 +21,11 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="mb-2 mb-lg-0 me-auto navbar-nav">
           <li class="nav-item">
+            <router-link class="nav-link" to="/accounts">
+              Accounts
+            </router-link>
+          </li>
+          <li class="nav-item">
             <router-link class="nav-link" to="/operations">
               Operations
             </router-link>
