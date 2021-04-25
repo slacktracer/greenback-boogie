@@ -4,11 +4,21 @@
       <div class="row">
         <div class="col-sm">
           <h1>Operations</h1>
-          <div class="list-group">
+          <div class="mb-3">
+            <router-link class="btn btn-outline-primary" to="/operation/new">
+              New Operation
+            </router-link>
+          </div>
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+              gap: 1rem;
+            "
+          >
             <div
-              class="list-group-item"
-              v-for="operation of operations.slice(range.start, range.end)"
               :key="operation.id"
+              v-for="operation of operations.slice(range.start, range.end)"
             >
               <expense-operation
                 v-if="operation.type === 'Expense'"
