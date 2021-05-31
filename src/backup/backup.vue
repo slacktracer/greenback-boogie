@@ -48,8 +48,8 @@
 <script>
 import { reactive } from "vue";
 
-import eai from "./dataToBackup/Report-2021-04-14--19-21-02.csv?raw"
-import t from "./dataToBackup/Report-2021-04-14--19-21-19.csv?raw"
+import eai from "./dataToBackup/eai.csv?raw"
+import t from "./dataToBackup/t.csv?raw"
 
 import { importBackup } from "./functions/import-backup";
 import { clearOperations } from "./functions/clear-operations";

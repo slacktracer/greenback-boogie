@@ -1,8 +1,8 @@
-import {database} from "../../root/database";
-import {initialAmountsByAccount} from "../data/initial-amounts-by-account";
-import {getFinalBalanceByAccount} from "./get-final-balance-by-account";
-import {getOperationsBalanceByAccount} from "./get-operations-balance-by-account";
-import {getTransfersBalanceByAccount} from "./get-transfers-balance-by-account";
+import { database } from "../../root/database";
+import { initialAmountsByAccount } from "../data/initial-amounts-by-account";
+import { getFinalBalanceByAccount } from "./get-final-balance-by-account";
+import { getOperationsBalanceByAccount } from "./get-operations-balance-by-account";
+import { getTransfersBalanceByAccount } from "./get-transfers-balance-by-account";
 
 export const loadAccounts = ({ accounts }) => {
   const operationsRef = database.ref("operations");
@@ -30,12 +30,12 @@ export const loadAccounts = ({ accounts }) => {
       transfers: operations,
     });
 
-    const { finalBalance, finalBalanceByAccount} =  getFinalBalanceByAccount({
+    const { finalBalance, finalBalanceByAccount } = getFinalBalanceByAccount({
       initialAmountsByAccount,
       operationsBalanceByAccount,
       transfersBalanceByAccount,
     });
 
-    accounts.value = { finalBalance, finalBalanceByAccount};
+    accounts.value = { finalBalance, finalBalanceByAccount };
   });
-}
+};
